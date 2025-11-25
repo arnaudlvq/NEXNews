@@ -1,0 +1,3 @@
+"""
+NEXNews test suite
+"""
