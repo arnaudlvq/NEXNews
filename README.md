@@ -169,7 +169,7 @@ When you search:
 ./run_tests.sh
 
 # Expected output
-======================== 13 passed in 2.37s ========================
+======================== 11 passed in 2.17s ========================
 ```
 
 Tests cover:

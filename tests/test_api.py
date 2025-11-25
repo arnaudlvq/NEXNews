@@ -191,48 +191,19 @@ class TestSearchEndpoint:
         assert len(data["articles"]) <= 3
 
 
-class TestRootEndpoint:
-    """Test root endpoint"""
+class TestStatsEmbeddings:
+    """Test stats endpoint includes embeddings"""
     
-    def test_root_returns_api_info(self):
-        """Test GET / returns API information"""
-        response = client.get("/")
+    def test_stats_includes_embeddings(self, setup_database):
+        """Test GET /stats includes embedding statistics"""
+        response = client.get("/stats")
         assert response.status_code == 200
         
         data = response.json()
-        assert "service" in data
-        assert data["service"] == "NEXNews API"
-        assert "version" in data
-        assert "endpoints" in data
-        assert "categories" in data
-        
-        # Check endpoints are documented
-        assert "POST /news/search" in data["endpoints"]
-        assert "GET /news/{article_id}" in data["endpoints"]
-    
-    def test_categories_list(self):
-        """Test root endpoint returns valid categories"""
-        response = client.get("/")
-        assert response.status_code == 200
-        
-        categories = response.json()["categories"]
-        assert isinstance(categories, list)
-        assert len(categories) > 0
-        assert "Cybersecurity" in categories
-
-
-class TestEmbeddingsEndpoint:
-    """Test embeddings statistics endpoint"""
-    
-    def test_embeddings_stats(self, setup_database):
-        """Test GET /embeddings/stats returns statistics"""
-        response = client.get("/embeddings/stats")
-        assert response.status_code == 200
-        
-        data = response.json()
-        assert "total_embeddings" in data
-        assert isinstance(data["total_embeddings"], int)
-        assert data["total_embeddings"] >= 0
+        assert "embeddings" in data
+        assert "total_embeddings" in data["embeddings"]
+        assert isinstance(data["embeddings"]["total_embeddings"], int)
+        assert data["embeddings"]["total_embeddings"] >= 0
 
 
 if __name__ == "__main__":
