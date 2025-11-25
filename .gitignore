@@ -30,7 +30,7 @@ wheels/
 *.db
 *.sqlite
 *.sqlite3
-# data/  # Uncomment to ignore the data folder
+data/
 
 # IDE
 .vscode/
